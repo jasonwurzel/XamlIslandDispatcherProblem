@@ -52,8 +52,6 @@
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.0-rc" />
 
     <!-- PackageReference for packages without a dedicated UAP lib (no TFM uap... but netstandard) or packages that alrady handle XAML islands with TFM netcoreapp -->
-    <PackageReference Include="Microsoft.Toolkit.Parsers" Version="5.1.1" />
-    <PackageReference Include="ColorCode.Core" Version="2.0.6" />
     <!-- Assembly references when package doesn't work (selects wrong TFM) -->
     
     <!-- needed for WinRT Component -->

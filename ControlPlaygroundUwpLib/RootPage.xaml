@@ -7,12 +7,6 @@
     mc:Ignorable="d"
     Background="DarkSeaGreen" RequestedTheme="Dark">
     <Grid x:Name="TheRootGrid">
-        <NavigationView ItemInvoked="NavigationView_ItemInvoked">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Content="playground" />
-            </NavigationView.MenuItems>
-            <Frame x:Name="frame" />
-        </NavigationView>
     </Grid>
 
 </Page>

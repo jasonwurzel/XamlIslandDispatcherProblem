@@ -1,4 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.Diagnostics;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace ControlPlaygroundUwpLib
 {
@@ -8,18 +12,21 @@ namespace ControlPlaygroundUwpLib
         {
             InitializeComponent();
 
-            frame.Navigate(typeof(PlaygroundPage));
+            Loaded += OnLoaded;
         }
 
-        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            string content = args.InvokedItemContainer.Content as string;
-
-            switch (content)
+            try
             {
-                case "playground":
-                    frame.Navigate(typeof(PlaygroundPage));
-                    break;
+                // This works
+                var currentDispatcher = Window.Current.Dispatcher;
+                // This throws
+                CoreDispatcher coreDispatcher = CoreApplication.Views[0].Dispatcher;
+            }
+            catch
+            {
+                Debugger.Break();
             }
         }
     }
