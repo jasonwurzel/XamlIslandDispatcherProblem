@@ -54,9 +54,6 @@
     <!-- PackageReference for packages without a dedicated UAP lib (no TFM uap... but netstandard) or packages that alrady handle XAML islands with TFM netcoreapp -->
     <!-- Assembly references when package doesn't work (selects wrong TFM) -->
     
-    <!-- needed for WinRT Component -->
-    <ReferenceCopyLocalPaths Include="$(NuGetPackageRoot)CompositionProToolkit\0.9.1\runtimes\win10-x64\native\CompositionDeviceHelper.dll" />
-
     <Reference Include="Microsoft.Toolkit.Uwp">
       <HintPath>$(NuGetPackageRoot)Microsoft.Toolkit.Uwp\5.1.1\lib\uap10.0.16299\Microsoft.Toolkit.Uwp.dll</HintPath>
     </Reference>
@@ -105,6 +102,7 @@
       <ResolvedCompileFileDefinitions Include="@(_ResolvedCompileFileDefinitions->'%(RootDir)%(Directory)..\uap10.0.16299\%(Filename)%(Extension)')">
         <HintPath>%(RootDir)%(Directory)..\uap10.0.16299\%(Filename)%(Extension)</HintPath>
       </ResolvedCompileFileDefinitions>
+
     </ItemGroup>
     
   </Target>
