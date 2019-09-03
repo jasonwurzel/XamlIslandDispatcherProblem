@@ -47,13 +47,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    
+
     <!-- VC++ Runtime -->
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.0-rc" />
 
     <!-- PackageReference for packages without a dedicated UAP lib (no TFM uap... but netstandard) or packages that alrady handle XAML islands with TFM netcoreapp -->
     <!-- Assembly references when package doesn't work (selects wrong TFM) -->
-    
+
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>$(NuGetPackageRoot)reactiveui.events\9.13.1\lib\uap10.0.16299\ReactiveUI.Events.dll</HintPath>
+    </Reference>
+
     <Reference Include="Microsoft.Toolkit.Uwp">
       <HintPath>$(NuGetPackageRoot)Microsoft.Toolkit.Uwp\5.1.1\lib\uap10.0.16299\Microsoft.Toolkit.Uwp.dll</HintPath>
     </Reference>
@@ -86,11 +90,21 @@
 
   </ItemGroup>
 
+  <!-- 
+  Special treatment of package references of Magrathea.Core. There they come in with TFM netstandard 
+  and get resolved here for TFM netcoreapp.
+  Change these references to the UAP assembly after the packages are resolved.
+  -->
+  <ItemGroup>
+    <TweakNuGetPackageId Include="System.Reactive" />
+    <TweakNuGetPackageId Include="ReactiveUI" />
+  </ItemGroup>
+
   <Target Name="TweakNuGetPackageReferences" AfterTargets="ResolvePackageAssets">
     <PropertyGroup>
       <TweakNuGetPackageIds>@(TweakNuGetPackageId)</TweakNuGetPackageIds>
     </PropertyGroup>
-    
+
     <ItemGroup>
       <!-- RuntimeCopyLocalItems -->
       <_RuntimeCopyLocalItems Include="@(RuntimeCopyLocalItems)" Condition="$([System.String]::new('$(TweakNuGetPackageIds)').Contains('%(RuntimeCopyLocalItems.NuGetPackageId)'))" />
@@ -103,8 +117,12 @@
         <HintPath>%(RootDir)%(Directory)..\uap10.0.16299\%(Filename)%(Extension)</HintPath>
       </ResolvedCompileFileDefinitions>
 
+      <!-- System.Reactive 4.2.0 -->
+      <_Reference Include="@(Reference)" Condition="$([System.String]::new('%(Reference.Identity)').EndsWith('System.Reactive.dll', System.StringComparison.OrdinalIgnoreCase))" />
+      <Reference Remove="@(_Reference)" />
+      <Reference Include="@(_Reference->'%(RootDir)%(Directory)..\..\lib\uap10.0.16299\%(Filename)%(Extension)')" />
     </ItemGroup>
-    
+
   </Target>
 
   <ItemGroup>

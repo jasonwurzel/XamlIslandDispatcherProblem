@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using ReactiveUI;
 
 namespace ControlPlaygroundUwpLib
 {
@@ -19,12 +20,15 @@ namespace ControlPlaygroundUwpLib
         {
             try
             {
+                var mts = RxApp.MainThreadScheduler;
+
                 var contentDispatcher = XamlRoot.Content.Dispatcher;
                 
                 // This works
                 var currentDispatcher = Window.Current.Dispatcher;
                 // This throws
                 CoreDispatcher coreDispatcher = CoreApplication.Views[0].Dispatcher;
+
             }
             catch
             {
