@@ -19,6 +19,8 @@ namespace ControlPlaygroundUwpLib
         {
             try
             {
+                var contentDispatcher = XamlRoot.Content.Dispatcher;
+                
                 // This works
                 var currentDispatcher = Window.Current.Dispatcher;
                 // This throws
