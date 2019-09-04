@@ -23,8 +23,12 @@ namespace ControlPlaygroundUwpLib
                 
                 // This works
                 var currentDispatcher = Window.Current.Dispatcher;
-                // This throws
-                CoreDispatcher coreDispatcher = CoreApplication.Views[0].Dispatcher;
+                
+                // This throws (from SingleWindowDispatcherScheduler)
+                if (CoreApplication.Views.Count > 0)
+                {
+                    var coreDispatcher = CoreApplication.Views[0].Dispatcher;
+                }
             }
             catch
             {
