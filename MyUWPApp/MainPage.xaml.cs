@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.Diagnostics;
+using Windows.UI.Xaml.Controls;
 using ReactiveUI;
 
 namespace MyUWPApp
@@ -11,7 +13,16 @@ namespace MyUWPApp
 
             Loaded += (_, __) =>
             {
-                var mainThreadScheduler = RxApp.MainThreadScheduler;
+                try
+                {
+                    // this throws
+                    var mainThreadScheduler = RxApp.MainThreadScheduler;
+                }
+                catch (Exception)
+                {
+                    Debugger.Break();
+                    throw;
+                }
             };
         }
     }
